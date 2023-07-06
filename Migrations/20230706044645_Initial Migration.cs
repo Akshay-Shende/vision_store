@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -11,125 +12,135 @@ namespace VisionStore.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySQL:Charset", "utf8mb4");
+
             migrationBuilder.CreateTable(
                 name: "customers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerFirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerLastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerEmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerContactNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    CustomerFirstName = table.Column<string>(type: "longtext", nullable: false),
+                    CustomerLastName = table.Column<string>(type: "longtext", nullable: false),
+                    CustomerEmailAddress = table.Column<string>(type: "longtext", nullable: false),
+                    CustomerContactNo = table.Column<string>(type: "longtext", nullable: false),
+                    CustomerAddress = table.Column<string>(type: "longtext", nullable: false),
+                    CustomerCity = table.Column<string>(type: "longtext", nullable: false),
                     CustomerPin = table.Column<int>(type: "int", nullable: false),
-                    CustomerCountry = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerCountry = table.Column<string>(type: "longtext", nullable: false),
                     PaymentMethodId = table.Column<int>(type: "int", nullable: false),
-                    CustomerPassword = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CustomerPassword = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_customers", x => x.Id);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "deliveryMethods",
                 columns: table => new
                 {
                     DeliveryMethodId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DeliveryMethodDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    DeliveryMethodDescription = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_deliveryMethods", x => x.DeliveryMethodId);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "discounts",
                 columns: table => new
                 {
                     DiscountId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DiscountCouponCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DiscountCouponDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    DiscountCouponCode = table.Column<string>(type: "longtext", nullable: false),
+                    DiscountCouponDescription = table.Column<string>(type: "longtext", nullable: false),
                     DiscountCouponPercentage = table.Column<int>(type: "int", nullable: false),
-                    DiscountCouponCodeStart = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DiscountCouponCodeValidTill = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DiscountCouponCodeStart = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DiscountCouponCodeValidTill = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_discounts", x => x.DiscountId);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "employees",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_employees", x => x.Id);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "manufacturers",
                 columns: table => new
                 {
                     ManuId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ManufacturerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManufacturerDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManuCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManuGrade = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    ManuCountry = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ManufacturerName = table.Column<string>(type: "longtext", nullable: false),
+                    ManufacturerDescription = table.Column<string>(type: "longtext", nullable: false),
+                    ManuCity = table.Column<string>(type: "longtext", nullable: false),
+                    ManuGrade = table.Column<string>(type: "varchar(1)", nullable: false),
+                    ManuCountry = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_manufacturers", x => x.ManuId);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "preferredPaymentMethods",
                 columns: table => new
                 {
                     PaymentMethodId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    PaymentMethodDescription = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    PaymentMethodDescription = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_preferredPaymentMethods", x => x.PaymentMethodId);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    RoleName = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "purchases",
                 columns: table => new
                 {
                     PurchaseId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    PaymentMethodUses = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TotalValue = table.Column<float>(type: "real", nullable: false),
+                    PaymentMethodUses = table.Column<string>(type: "longtext", nullable: false),
+                    TotalValue = table.Column<float>(type: "float", nullable: false),
                     DiscountAppliedId = table.Column<int>(type: "int", nullable: false),
-                    DiscountTableDiscountId = table.Column<int>(type: "int", nullable: false),
+                    DiscountTableDiscountId = table.Column<int>(type: "int", nullable: true),
                     FinalValue = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -145,29 +156,29 @@ namespace VisionStore.Migrations
                         name: "FK_purchases_discounts_DiscountTableDiscountId",
                         column: x => x.DiscountTableDiscountId,
                         principalTable: "discounts",
-                        principalColumn: "DiscountId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        principalColumn: "DiscountId");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "products",
                 columns: table => new
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductFeature = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductManufacturer = table.Column<int>(type: "int", nullable: false),
-                    ManufacturerManuId = table.Column<int>(type: "int", nullable: false),
-                    ProductSize = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductSubCategory = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    ProductName = table.Column<string>(type: "longtext", nullable: false),
+                    ProductDescription = table.Column<string>(type: "longtext", nullable: false),
+                    ProductFeature = table.Column<string>(type: "longtext", nullable: false),
+                    ManuId = table.Column<int>(type: "int", nullable: false),
+                    ManufacturerManuId = table.Column<int>(type: "int", nullable: true),
+                    ProductSize = table.Column<string>(type: "longtext", nullable: false),
+                    ProductSubCategory = table.Column<string>(type: "longtext", nullable: false),
                     ProductUnit = table.Column<int>(type: "int", nullable: false),
                     ProductInventoryLevel = table.Column<int>(type: "int", nullable: false),
                     ProductUnitPrice = table.Column<long>(type: "bigint", nullable: false),
-                    ProductPriceCurrency = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductPriceCurrency = table.Column<string>(type: "longtext", nullable: false),
                     ProductInventoryThreshold = table.Column<int>(type: "int", nullable: false),
-                    ProductImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ProductImageUrl = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -176,23 +187,23 @@ namespace VisionStore.Migrations
                         name: "FK_products_manufacturers_ManufacturerManuId",
                         column: x => x.ManufacturerManuId,
                         principalTable: "manufacturers",
-                        principalColumn: "ManuId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        principalColumn: "ManuId");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "userMasters",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserEmailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserContactNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserSecreteQuestion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserSecreteAnswer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    FirstName = table.Column<string>(type: "longtext", nullable: false),
+                    LastName = table.Column<string>(type: "longtext", nullable: false),
+                    UserEmailId = table.Column<string>(type: "longtext", nullable: false),
+                    UserContactNo = table.Column<string>(type: "longtext", nullable: false),
+                    Password = table.Column<string>(type: "longtext", nullable: false),
+                    UserSecreteQuestion = table.Column<string>(type: "longtext", nullable: false),
+                    UserSecreteAnswer = table.Column<string>(type: "longtext", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -204,17 +215,18 @@ namespace VisionStore.Migrations
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "carts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CartTimestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    CartTimestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    productsProductId = table.Column<int>(type: "int", nullable: false),
+                    productsProductId = table.Column<int>(type: "int", nullable: true),
                     SelectedUnits = table.Column<int>(type: "int", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -231,21 +243,21 @@ namespace VisionStore.Migrations
                         name: "FK_carts_products_productsProductId",
                         column: x => x.productsProductId,
                         principalTable: "products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        principalColumn: "ProductId");
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
                 name: "purchaseProducts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    ProductsProductId = table.Column<int>(type: "int", nullable: false),
+                    ProductsProductId = table.Column<int>(type: "int", nullable: true),
                     PurchaseId = table.Column<int>(type: "int", nullable: false),
                     PurchasedUnits = table.Column<int>(type: "int", nullable: false),
-                    DeliveryInstruction = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DeliveryInstruction = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,15 +266,15 @@ namespace VisionStore.Migrations
                         name: "FK_purchaseProducts_products_ProductsProductId",
                         column: x => x.ProductsProductId,
                         principalTable: "products",
-                        principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ProductId");
                     table.ForeignKey(
                         name: "FK_purchaseProducts_purchases_PurchaseId",
                         column: x => x.PurchaseId,
                         principalTable: "purchases",
                         principalColumn: "PurchaseId",
                         onDelete: ReferentialAction.Cascade);
-                });
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_carts_CustomerId",
