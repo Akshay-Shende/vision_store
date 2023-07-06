@@ -24,7 +24,8 @@ namespace VisionStore
             builder.Services.AddControllersWithViews()
                             .AddNewtonsoftJson(options =>
                                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+                                              );
+
             builder.Services.AddDbContext<VisionStoreDbContext>(options =>
             options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -34,6 +35,8 @@ namespace VisionStore
             builder.Services.AddTransient<PreferredPaymentMethodRepository>();            
             builder.Services.AddTransient<ManufacturerRepository>();            
             builder.Services.AddTransient<DiscountTableRepository>();            
+            builder.Services.AddTransient<DeliveryRepository>();            
+            builder.Services.AddTransient<ProductRepository>();            
             builder.Services.AddTransient(typeof(IRepository<>),typeof(Repository<>));
             builder.Services.AddTransient<Repository<PreferredPaymentMethod>>();
             builder.Services.AddTransient<Repository<Roles>>();
@@ -42,6 +45,8 @@ namespace VisionStore
             builder.Services.AddTransient<Repository<PreferredPaymentMethod>>();
             builder.Services.AddTransient<Repository<Manufacturer>>();
             builder.Services.AddTransient<Repository<DiscountTable>>();
+            builder.Services.AddTransient<Repository<DeliveryMethods>>();
+            builder.Services.AddTransient<Repository<Products>>();
 
             
 
