@@ -37,6 +37,8 @@ namespace VisionStore
             builder.Services.AddTransient<DiscountTableRepository>();            
             builder.Services.AddTransient<DeliveryRepository>();            
             builder.Services.AddTransient<ProductRepository>();            
+            builder.Services.AddTransient<PurchaseRepository>();            
+            builder.Services.AddTransient<PurchaseProductRepository>();            
             builder.Services.AddTransient(typeof(IRepository<>),typeof(Repository<>));
             builder.Services.AddTransient<Repository<PreferredPaymentMethod>>();
             builder.Services.AddTransient<Repository<Roles>>();
@@ -47,6 +49,8 @@ namespace VisionStore
             builder.Services.AddTransient<Repository<DiscountTable>>();
             builder.Services.AddTransient<Repository<DeliveryMethods>>();
             builder.Services.AddTransient<Repository<Products>>();
+            builder.Services.AddTransient<Repository<Purchase>>();
+            builder.Services.AddTransient<Repository<PurchaseProducts>>();
 
             
 

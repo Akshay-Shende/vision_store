@@ -14,7 +14,6 @@ namespace VisionStore.Models
         public int CustomerPin { get; set; }
         public string CustomerCountry { get; set; }
         public int PaymentMethodId { get; set; }
-        PreferredPaymentMethod? PreferredPaymentMethod { get; set; }
         public string CustomerPassword { get; set; }
     }
 }
