@@ -27,16 +27,21 @@ namespace VisionStore
 );
             builder.Services.AddDbContext<VisionStoreDbContext>(options =>
             options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             builder.Services.AddTransient<RoleRepository>();
             builder.Services.AddTransient<CustomerRepository>();
             builder.Services.AddTransient<UserMasterRepository>();
             builder.Services.AddTransient<PreferredPaymentMethodRepository>();            
+            builder.Services.AddTransient<ManufacturerRepository>();            
+            builder.Services.AddTransient<DiscountTableRepository>();            
             builder.Services.AddTransient(typeof(IRepository<>),typeof(Repository<>));
             builder.Services.AddTransient<Repository<PreferredPaymentMethod>>();
             builder.Services.AddTransient<Repository<Roles>>();
             builder.Services.AddTransient<Repository<Customer>>();
             builder.Services.AddTransient<Repository<UserMaster>>();
             builder.Services.AddTransient<Repository<PreferredPaymentMethod>>();
+            builder.Services.AddTransient<Repository<Manufacturer>>();
+            builder.Services.AddTransient<Repository<DiscountTable>>();
 
             
 
