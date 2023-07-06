@@ -63,7 +63,7 @@ namespace VisionStore.Repositories
             if (data!=null)
             {   
                data  = _mapper.Map<CustomerDto, Customer>(customer);
-                data.Id = id;
+                data.CustomerId = id;
                 var result = _dbContext.customers.Update(data);
                 _dbContext.SaveChanges();
                 return result.Entity;
