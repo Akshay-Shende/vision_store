@@ -19,7 +19,7 @@ namespace VisionStore.Migrations
                 name: "customers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    CustomerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     CustomerFirstName = table.Column<string>(type: "longtext", nullable: false),
                     CustomerLastName = table.Column<string>(type: "longtext", nullable: false),
@@ -34,7 +34,7 @@ namespace VisionStore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_customers", x => x.Id);
+                    table.PrimaryKey("PK_customers", x => x.CustomerId);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -139,7 +139,7 @@ namespace VisionStore.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: false),
                     PaymentMethodUses = table.Column<string>(type: "longtext", nullable: false),
                     TotalValue = table.Column<float>(type: "float", nullable: false),
-                    DiscountAppliedId = table.Column<int>(type: "int", nullable: false),
+                    DiscountId = table.Column<int>(type: "int", nullable: false),
                     DiscountTableDiscountId = table.Column<int>(type: "int", nullable: true),
                     FinalValue = table.Column<int>(type: "int", nullable: false)
                 },
@@ -150,7 +150,7 @@ namespace VisionStore.Migrations
                         name: "FK_purchases_customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "customers",
-                        principalColumn: "Id",
+                        principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_purchases_discounts_DiscountTableDiscountId",
@@ -237,7 +237,7 @@ namespace VisionStore.Migrations
                         name: "FK_carts_customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "customers",
-                        principalColumn: "Id",
+                        principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_carts_products_productsProductId",

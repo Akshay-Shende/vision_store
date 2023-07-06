@@ -11,7 +11,7 @@ using VisionStore.Data;
 namespace VisionStore.Migrations
 {
     [DbContext(typeof(VisionStoreDbContext))]
-    [Migration("20230706044645_Initial Migration")]
+    [Migration("20230706052622_Initial Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -54,7 +54,7 @@ namespace VisionStore.Migrations
 
             modelBuilder.Entity("VisionStore.Models.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -96,7 +96,7 @@ namespace VisionStore.Migrations
                     b.Property<int>("PaymentMethodId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("CustomerId");
 
                     b.ToTable("customers");
                 });
@@ -273,7 +273,7 @@ namespace VisionStore.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DiscountAppliedId")
+                    b.Property<int>("DiscountId")
                         .HasColumnType("int");
 
                     b.Property<int?>("DiscountTableDiscountId")
