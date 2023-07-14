@@ -11,8 +11,8 @@ using VisionStore.Data;
 namespace VisionStore.Migrations
 {
     [DbContext(typeof(VisionStoreDbContext))]
-    [Migration("20230706052622_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20230713063502_initialmigration")]
+    partial class initialmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

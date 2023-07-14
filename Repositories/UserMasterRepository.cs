@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using VisionStore.Data;
 using VisionStore.Dto;
+using VisionStore.Helper;
 using VisionStore.Models;
 
 namespace VisionStore.Repositories
@@ -21,6 +22,8 @@ namespace VisionStore.Repositories
 
         public UserMaster Create(UserMaster userMaster)
         {
+           var hashPassword =  PasswordHasher.HashPassword(userMaster.Password);
+            userMaster.Password = hashPassword;
             var result = _repository.Create(userMaster);          
                 return result;        
         }

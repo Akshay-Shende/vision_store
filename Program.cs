@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using VisionStore.Data;
 using VisionStore.Helper;
 using VisionStore.Models;
@@ -20,11 +23,36 @@ namespace VisionStore
 
             // Add services to the container.
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                            .AddJwtBearer(options =>
+                            {
+                                options.RequireHttpsMetadata= false;
+                                options.SaveToken = true;
+                                options.TokenValidationParameters = new TokenValidationParameters()
+                                {
+                                    ValidateIssuer = true,
+                                    ValidateAudience = true,               
+                                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+                                }; 
+                            }
+                            );
             builder.Services.AddControllers();
             builder.Services.AddControllersWithViews()
                             .AddNewtonsoftJson(options =>
                                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                                               );
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    }
+                    );
+            });
 
             builder.Services.AddDbContext<VisionStoreDbContext>(options =>
             options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -52,9 +80,6 @@ namespace VisionStore
             builder.Services.AddTransient<Repository<Purchase>>();
             builder.Services.AddTransient<Repository<PurchaseProducts>>();
 
-            
-
-
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -72,10 +97,14 @@ namespace VisionStore
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
-
-
+            app.UseCors(options => options.AllowAnyOrigin()
+                                          .AllowAnyHeader()
+                                          .SetIsOriginAllowed(origin => true)
+                                          .AllowAnyMethod());
             app.MapControllers();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.Run();
         }
