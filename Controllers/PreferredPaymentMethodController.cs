@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VisionStore.Dto;
 using VisionStore.Models;
 using VisionStore.Repositories;
 
@@ -25,6 +26,18 @@ namespace VisionStore.Controllers
         public ActionResult Get()
         {
             return Ok(_preferredPaymentMethod.GetAll());
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult Get(int id)
+        {
+            return Ok(_preferredPaymentMethod.GetById(id));
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Put(int id, [FromBody] PreferredPaymentMethodDto ppm)
+        {
+            return Ok(_preferredPaymentMethod.Update((id),ppm));
         }
     }
 }

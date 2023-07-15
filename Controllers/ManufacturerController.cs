@@ -45,7 +45,7 @@ namespace VisionStore.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(ManufacturerDto model,int id) { 
+        public IActionResult Put([FromBody]ManufacturerDto model,int id) { 
         return Ok(_manufacturerRepo.Update(id,model));
         }
     }

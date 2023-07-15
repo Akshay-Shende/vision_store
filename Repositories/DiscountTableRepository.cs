@@ -60,7 +60,15 @@ namespace VisionStore.Repositories
 
         public DiscountTable? Update(int id, DiscountTableDto customer)
         {
-            throw new NotImplementedException();
+            if (GetById(id)!=null)
+            {
+                var output = _mapper.Map<DiscountTable>(customer);
+                    output.DiscountId= id;
+                var result = _dbContext.discounts.Update(output);
+                _dbContext.SaveChanges();
+                return result.Entity;
+            }
+            return null;
         }
     }
 }

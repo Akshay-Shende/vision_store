@@ -61,7 +61,15 @@ namespace VisionStore.Repositories
 
         public DeliveryMethods? Update(int id, DeliveryDto delivery)
         {
-            throw new NotImplementedException();
+            if (GetById(id)!=null)
+            {
+                var output = _mapper.Map<DeliveryMethods>(delivery);
+                output.DeliveryMethodId = id;
+                var result = _dbContext.deliveryMethods.Update(output);
+                _dbContext.SaveChanges();
+                return result.Entity;
+            }
+            return null;
         }
     }
 }

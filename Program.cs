@@ -55,11 +55,15 @@ namespace VisionStore
             });
 
             builder.Services.AddDbContext<VisionStoreDbContext>(options =>
-            options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
+            {
+                options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            }) ;
+            
 
             builder.Services.AddTransient<RoleRepository>();
             builder.Services.AddTransient<CustomerRepository>();
-            builder.Services.AddTransient<UserMasterRepository>();
+            builder.Services.AddScoped<UserMasterRepository>();
             builder.Services.AddTransient<PreferredPaymentMethodRepository>();            
             builder.Services.AddTransient<ManufacturerRepository>();            
             builder.Services.AddTransient<DiscountTableRepository>();            

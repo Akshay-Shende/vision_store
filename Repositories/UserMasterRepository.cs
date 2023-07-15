@@ -46,14 +46,14 @@ namespace VisionStore.Repositories
                 return result;
         }
 
-        public UserMaster Update(int id, UserMasterDto userMasterDto)
+        public UserMaster? Update(int id, UserMasterDto userMasterDto)
         {
             var data = _dbContext.userMasters.Find(id);
             if (data != null)
             {
-                data = _mapper.Map<UserMasterDto, UserMaster>(userMasterDto);
-                data.Id = id;
-                var result = _dbContext.userMasters.Update(data);
+               var output = _mapper.Map<UserMaster>(userMasterDto);
+                output.Id = id;
+                var result = _dbContext.userMasters.Update(output);
                 _dbContext.SaveChanges();
                 return result.Entity;
             }

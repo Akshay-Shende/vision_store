@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -37,7 +38,10 @@ namespace VisionStore.Controllers
             var data = _dbContext.userMasters.Include(x => x.Role).ToList();
 
             var result = data.Find(x => x.Id == login.userId);
-
+            if (result==null)
+            {
+                return null;
+            }
            var output =  PasswordHasher.VerifyPassword(login.password, result.Password);
 
             if (output)
@@ -46,14 +50,12 @@ namespace VisionStore.Controllers
                 {
                     userId = login.userId,
                     password = login.password,
-                    Role = result.Role.RoleName
+                    Role = result.Role.RoleName,
+                    UserMaster = result
                 };
                 return _user;
             }
-            return null;
-
-           
-           
+            return null;  
         }
 
         private string GenerateToken(LoginDto login)
@@ -96,7 +98,7 @@ namespace VisionStore.Controllers
                 return Ok(model);
             }
 
-            return Unauthorized("UnAuthorized User");
+            return null;
 
             
         }

@@ -2,5 +2,6 @@
 {
     public class DeliveryDto
     {
+        public string DeliveryMethodDescription { get; set; }
     }
 }
