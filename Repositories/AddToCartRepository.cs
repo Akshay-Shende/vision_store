@@ -7,20 +7,20 @@ using VisionStore.Models;
 
 namespace VisionStore.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class AddToCartRepository : IAddToCartRepository
     {
         private readonly VisionStoreDbContext _dbContext;
-        private readonly IMapper _mapper;
-        private readonly Repository<Products> _repository;
-        public ProductRepository(VisionStoreDbContext dbContext, IMapper mapper, Repository<Products> repository)
+        private readonly IMapper              _mapper;
+        private readonly Repository<Cart>     _repository;
+        public AddToCartRepository(VisionStoreDbContext dbContext, IMapper mapper, Repository<Cart> repository)
         {
-            _dbContext = dbContext;
-            _mapper = mapper;
+            _dbContext  = dbContext;
+            _mapper     = mapper;
             _repository = repository;
         }
-        public Products? Create(Products products)
+        public Cart Create(Cart cart)
         {
-            var result = _repository.Create(products);
+            var result = _repository.Create(cart);
             if (result != null)
             {
                 return result;
@@ -28,7 +28,7 @@ namespace VisionStore.Repositories
             return null;
         }
 
-        public Products? Delete(int id)
+        public Cart Delete(int id)
         {
             var result = _repository.Delete(id);
             if (result != null)
@@ -38,22 +38,17 @@ namespace VisionStore.Repositories
             return null;
         }
 
-        public List<Products>? GetAll()
+        public List<Cart> GetAll()
         {
-            var result = _dbContext.products.ToList();
+            var result = _repository.GetAll();
             if (result != null)
             {
-                foreach (var product in result)
-                {
-                    var manufacturer = _dbContext.manufacturers.Find(product.ManuId);
-                    product.Manufacturer = manufacturer;
-                }
                 return result;
             }
             return null;
         }
 
-        public Products? GetById(int id)
+        public Cart GetById(int id)
         {
             var result = _repository.GetById(id);
             if (result != null)
@@ -63,14 +58,24 @@ namespace VisionStore.Repositories
             return null;
         }
 
-        public Products? Update(int id, ProductsDto product)
+        public List<Cart>? GetByUserId(int userId)
         {
-            var data = _dbContext.products.Find(id);
+            var result = _dbContext.carts.ToList().Where(x => x.UserMasterId == userId);
+            if (result!=null)
+            {
+                return result.ToList();
+            }
+            return null;
+        }
+
+        public Cart Update(int id, CartDto cartDto)
+        {
+            var data = _dbContext.carts.Find(id);
             if (data != null)
             {
-                var output = _mapper.Map<Products>(product);
-                output.ProductId = id;
-                var result = _dbContext.products.Update(output);
+                data = _mapper.Map<CartDto, Cart>(cartDto);
+                data.UserMasterId = id;
+                var result = _dbContext.carts.Update(data);
                 _dbContext.SaveChanges();
                 return result.Entity;
             }

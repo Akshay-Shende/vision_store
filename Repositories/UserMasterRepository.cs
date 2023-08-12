@@ -36,7 +36,8 @@ namespace VisionStore.Repositories
 
         public List<UserMaster> GetAll()
         {
-            var result = _repository.GetAll();      
+            var result = _dbContext.userMasters.Include(x => x.Role).ToList(); 
+            
                 return result;
         }
 

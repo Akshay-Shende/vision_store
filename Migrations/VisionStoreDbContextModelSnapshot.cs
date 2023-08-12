@@ -28,13 +28,13 @@ namespace VisionStore.Migrations
                     b.Property<DateTime>("CartTimestamp")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("SelectedUnits")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserMasterId")
                         .HasColumnType("int");
 
                     b.Property<int?>("productsProductId")
@@ -42,7 +42,7 @@ namespace VisionStore.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("UserMasterId");
 
                     b.HasIndex("productsProductId");
 
@@ -387,9 +387,9 @@ namespace VisionStore.Migrations
 
             modelBuilder.Entity("VisionStore.Models.Cart", b =>
                 {
-                    b.HasOne("VisionStore.Models.Customer", "Customer")
+                    b.HasOne("VisionStore.Models.UserMaster", "UserMaster")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("UserMasterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -397,7 +397,7 @@ namespace VisionStore.Migrations
                         .WithMany()
                         .HasForeignKey("productsProductId");
 
-                    b.Navigation("Customer");
+                    b.Navigation("UserMaster");
 
                     b.Navigation("products");
                 });

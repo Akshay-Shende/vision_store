@@ -13,6 +13,7 @@ namespace VisionStore.Helper
             CreateMap<UserMasterDto, UserMaster>().ReverseMap();
             CreateMap<DiscountTableDto, DiscountTable>().ReverseMap();
             CreateMap<DeliveryDto, DeliveryMethods>().ReverseMap();
+            CreateMap<ProductsDto, Products>().ReverseMap();
         }    
     }
 }

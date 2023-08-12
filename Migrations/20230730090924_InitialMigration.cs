@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace VisionStore.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -219,35 +219,6 @@ namespace VisionStore.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "carts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    CartTimestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    productsProductId = table.Column<int>(type: "int", nullable: true),
-                    SelectedUnits = table.Column<int>(type: "int", nullable: false),
-                    CustomerId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_carts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_carts_customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "customers",
-                        principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_carts_products_productsProductId",
-                        column: x => x.productsProductId,
-                        principalTable: "products",
-                        principalColumn: "ProductId");
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "purchaseProducts",
                 columns: table => new
                 {
@@ -276,15 +247,44 @@ namespace VisionStore.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_carts_CustomerId",
-                table: "carts",
-                column: "CustomerId");
+            migrationBuilder.CreateTable(
+                name: "carts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    CartTimestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    productsProductId = table.Column<int>(type: "int", nullable: true),
+                    SelectedUnits = table.Column<int>(type: "int", nullable: false),
+                    UserMasterId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_carts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_carts_products_productsProductId",
+                        column: x => x.productsProductId,
+                        principalTable: "products",
+                        principalColumn: "ProductId");
+                    table.ForeignKey(
+                        name: "FK_carts_userMasters_UserMasterId",
+                        column: x => x.UserMasterId,
+                        principalTable: "userMasters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateIndex(
                 name: "IX_carts_productsProductId",
                 table: "carts",
                 column: "productsProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_carts_UserMasterId",
+                table: "carts",
+                column: "UserMasterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_products_ManufacturerManuId",
