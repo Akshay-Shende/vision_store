@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using System.Text;
 using VisionStore.Data;
 using VisionStore.Dto;
+using VisionStore.Enums;
 using VisionStore.Helper;
 using VisionStore.Models;
 using static Org.BouncyCastle.Math.EC.ECCurve;
@@ -32,7 +33,7 @@ namespace VisionStore.Controllers
         }
 
 
-        private LoginDto? AuthenticateUser([FromBody]Login login)
+        private RepositoryResult<LoginDto>? AuthenticateUser([FromBody]Login login)
         {
              LoginDto _user = null;
             var data = _dbContext.userMasters.Include(x => x.Role).ToList();
@@ -40,7 +41,7 @@ namespace VisionStore.Controllers
             var result = data.Find(x => x.Id == login.userId);
             if (result==null)
             {
-                return null;
+                return new RepositoryResult<LoginDto>(null,ErrorType.ValidationError);
             }
            var output =  PasswordHasher.VerifyPassword(login.password, result.Password);
 
@@ -53,10 +54,12 @@ namespace VisionStore.Controllers
                     Role = result.Role.RoleName,
                     UserMaster = result
                 };
-                return _user;
+                return new RepositoryResult<LoginDto>(_user, null);
             }
-            return null;  
+            return new RepositoryResult<LoginDto>(null, ErrorType.InvalidPassword);
         }
+
+       
 
         private string GenerateToken(LoginDto login)
         {
@@ -86,19 +89,29 @@ namespace VisionStore.Controllers
         {
             var result = AuthenticateUser(login);
            
-            if (result!=null)
+            if (result.Data!= null)
             {
-                var token = GenerateToken(result);
+                var token = GenerateToken(result.Data);
 
                 var model = new
                 {
                     _token = token,
-                    _result = result
+                    _result = result,
+                    Message = "Login Successfully"
                 };
                 return Ok(model);
             }
-
-            return null;
+            else if(result.Error==ErrorType.InvalidPassword)
+            {
+                return Unauthorized(new Error()
+                {
+                    Message = "Wrong Password",
+                });
+            }
+                return Unauthorized(new Error()
+                {
+                    Message = "Unauthorized User Entry",
+                });
 
             
         }

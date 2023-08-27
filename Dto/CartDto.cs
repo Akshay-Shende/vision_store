@@ -8,7 +8,7 @@ namespace VisionStore.Dto
         public int ProductId { get; set; }
         public Products? products { get; set; }
         public int SelectedUnits { get; set; }
-        public int CustomerId { get; set; }
-        public Customer? Customer { get; set; }
+        public int UserMasterId { get; set; }
+        public UserMaster? UserMaster { get; set; }
     }
 }

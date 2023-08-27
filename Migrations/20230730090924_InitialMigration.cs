@@ -256,7 +256,7 @@ namespace VisionStore.Migrations
                     CartTimestamp = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     productsProductId = table.Column<int>(type: "int", nullable: true),
-                    SelectedUnits = table.Column<int>(type: "int", nullable: false),
+                    SelectedUnits = table.Column<int>(type: "int", nullable: false, defaultValue:1),
                     UserMasterId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

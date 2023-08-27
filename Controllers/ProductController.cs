@@ -18,9 +18,18 @@ namespace VisionStore.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Index([FromQuery ] string filter = "default")
         {
-            return Ok(_productRepository.GetAll());
+            var products = _productRepository.GetAll();
+            if (filter == "asc")
+            {
+                return Ok(products.Where(x => x.ProductInventoryLevel>0).OrderBy(e => e.ProductName));
+            }
+           else if(filter == "desc")
+            {
+                return Ok(products.Where(x => x.ProductInventoryLevel > 0).OrderByDescending(e => e.ProductName));
+            }
+            return Ok(products);
         }
 
         [HttpGet("{id}")]

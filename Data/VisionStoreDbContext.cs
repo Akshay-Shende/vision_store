@@ -22,5 +22,11 @@ namespace VisionStore.Data
         public DbSet<PurchaseProducts> purchaseProducts { get; set; }
         public DbSet<Roles> Roles { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cart>()
+                 .Property(p => p.SelectedUnits)
+                 .HasDefaultValue(1);
+        }
     }
 }

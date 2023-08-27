@@ -7,14 +7,13 @@ using System.Text;
 using VisionStore.Data;
 using VisionStore.Helper;
 using VisionStore.Models;
+using VisionStore.Models.Webgentle.BookStore.Models;
 using VisionStore.Repositories;
 
 namespace VisionStore
 {
     public class Program
     {
-      
-
         public IConfiguration Configuration { get; }
 
         public static void Main(string[] args)
@@ -54,6 +53,8 @@ namespace VisionStore
                     );
             });
 
+            builder.Services.Configure<SMTPConfigModel>(builder.Configuration.GetSection("SMTPConfig"));
+
             builder.Services.AddDbContext<VisionStoreDbContext>(options =>
             {
                 options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -85,7 +86,8 @@ namespace VisionStore
             builder.Services.AddTransient<Repository<Purchase>>();
             builder.Services.AddTransient<Repository<PurchaseProducts>>();
             builder.Services.AddTransient<Repository<Cart>>();
-
+            builder.Services.AddTransient<EmailSenderRepository>();
+ 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

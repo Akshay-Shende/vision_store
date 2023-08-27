@@ -60,7 +60,7 @@ namespace VisionStore.Repositories
 
         public List<Cart>? GetByUserId(int userId)
         {
-            var result = _dbContext.carts.ToList().Where(x => x.UserMasterId == userId);
+            var result = _dbContext.carts.Include(x => x.Products).Include(x=>x.UserMaster).ToList().Where(x => x.UserMasterId == userId);
             if (result!=null)
             {
                 return result.ToList();
@@ -74,7 +74,7 @@ namespace VisionStore.Repositories
             if (data != null)
             {
                 data = _mapper.Map<CartDto, Cart>(cartDto);
-                data.UserMasterId = id;
+                data.Id = id;
                 var result = _dbContext.carts.Update(data);
                 _dbContext.SaveChanges();
                 return result.Entity;
