@@ -16,6 +16,6 @@ namespace VisionStore.Dto
         public long ProductUnitPrice { get; set; }
         public string ProductPriceCurrency { get; set; }
         public int ProductInventoryThreshold { get; set; }
-        public string ProductImageUrl { get; set; }
+        public IFormFile ProductImageUrl{ get; set; }
     }
 }

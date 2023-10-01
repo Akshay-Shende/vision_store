@@ -87,7 +87,8 @@ namespace VisionStore
             builder.Services.AddTransient<Repository<PurchaseProducts>>();
             builder.Services.AddTransient<Repository<Cart>>();
             builder.Services.AddTransient<EmailSenderRepository>();
- 
+            builder.Services.AddTransient<FileServiceRepository>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
