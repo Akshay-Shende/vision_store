@@ -40,9 +40,14 @@ namespace VisionStore.Repositories
 
         public List<Products>? GetAll()
         {
-            var result = _repository.GetAll();
+            var result = _dbContext.products.ToList();
             if (result != null)
             {
+                foreach (var product in result)
+                {
+                    var manufacturer = _dbContext.manufacturers.Find(product.ManuId);
+                    product.Manufacturer = manufacturer;
+                }
                 return result;
             }
             return null;
@@ -58,9 +63,18 @@ namespace VisionStore.Repositories
             return null;
         }
 
-        public Products Update(int id, ProductsDto product)
+        public Products? Update(int id, ProductsDto product)
         {
-            throw new NotImplementedException();
+            var data = _dbContext.products.Find(id);
+            if (data != null)
+            {
+                var output = _mapper.Map<Products>(product);
+                output.ProductId = id;
+                var result = _dbContext.products.Update(output);
+                _dbContext.SaveChanges();
+                return result.Entity;
+            }
+            return null;
         }
     }
 }

@@ -12,6 +12,6 @@ namespace VisionStore.Dto
         public string UserSecreteQuestion { get; set; }
         public string UserSecreteAnswer { get; set; }
         public int RoleId { get; set; }
-        public Roles role { get; set; }
+        public Roles? Role { get; set; }
     }
 }

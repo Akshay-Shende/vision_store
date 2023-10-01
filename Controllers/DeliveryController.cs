@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VisionStore.Dto;
 using VisionStore.Models;
@@ -17,6 +18,7 @@ namespace VisionStore.Controllers
             _deliveryRepository = deliveryRepository;
         }
 
+       
         [HttpGet]
         public IActionResult Get()
         {

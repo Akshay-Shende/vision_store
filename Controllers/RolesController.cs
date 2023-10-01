@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,7 @@ namespace VisionStore.Controllers
 
         }
 
+        
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(int id) { 
@@ -44,8 +46,8 @@ namespace VisionStore.Controllers
             return Ok(result);
         }
 
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
-        
         public IActionResult Get()
         {
             var result = _repository.GetAll();

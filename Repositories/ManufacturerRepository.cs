@@ -58,8 +58,18 @@ namespace VisionStore.Repositories
 
         public Manufacturer? Update(int id, ManufacturerDto customer)
         {
-           
+            if (GetById(id) != null)
+            {
+                var output = _mapper.Map<Manufacturer>(customer);
+                output.ManuId = id;
+                var result = _dbContext.manufacturers.Update(output);
+                _dbContext.SaveChanges();
+                return result.Entity;
+            }
             return null;
         }
+
     }
 }
+    
+

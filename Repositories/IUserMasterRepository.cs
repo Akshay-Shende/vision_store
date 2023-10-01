@@ -10,5 +10,6 @@ namespace VisionStore.Repositories
         public abstract UserMaster Create(UserMaster userMaster);
         public abstract UserMaster Update(int id, UserMasterDto customer);
         public abstract UserMaster Delete(int id);
+        public abstract UserMaster FindByEmailAsync(string email);
     }
 }
