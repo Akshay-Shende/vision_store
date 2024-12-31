@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VisionStore.Data;
 
@@ -10,9 +11,11 @@ using VisionStore.Data;
 namespace VisionStore.Migrations
 {
     [DbContext(typeof(VisionStoreDbContext))]
-    partial class VisionStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241123185032_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

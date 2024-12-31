@@ -21,6 +21,7 @@ namespace VisionStore.Data
         public DbSet<Manufacturer> manufacturers { get; set; }
         public DbSet<PurchaseProducts> purchaseProducts { get; set; }
         public DbSet<Roles> Roles { get; set; }
+        public DbSet<PurchasedProducts> purchasedProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -39,6 +39,22 @@ namespace VisionStore.Repositories
             return null;
         }
 
+        public List<T> CreateBulk(List<T> entity)
+        {
+            var result = new List<T>();
+            foreach (var item in entity)
+            {
+                var addOn = _dbSet.Add(item);
+                 _dbContext.SaveChanges();
+                result.Add(addOn.Entity);
+            }
+            if (result != null)
+            {
+                return result;
+            }
+            return null;
+        }
+
         public T? Delete(int id)
         {
             var data = GetById(id);

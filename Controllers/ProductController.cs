@@ -14,14 +14,12 @@ namespace VisionStore.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
         private readonly Repository<Products> _repository;
-        private readonly FileServiceRepository _fileServiceRepository;
 
-        public ProductController(ProductRepository productRepository, IMapper mapper, Repository<Products> repository, FileServiceRepository fileServiceRepository)
+        public ProductController(ProductRepository productRepository, IMapper mapper, Repository<Products> repository)
         {
             _productRepository = productRepository;
             _mapper            = mapper;
             _repository        = repository;
-            _fileServiceRepository = fileServiceRepository;
         }
 
         [HttpGet]

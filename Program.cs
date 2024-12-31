@@ -72,6 +72,7 @@ namespace VisionStore
             builder.Services.AddTransient<ProductRepository>();            
             builder.Services.AddTransient<PurchaseRepository>();            
             builder.Services.AddTransient<PurchaseProductRepository>();            
+            builder.Services.AddTransient<PurchasedProductsRepository>();            
             builder.Services.AddTransient<AddToCartRepository>();            
             builder.Services.AddTransient(typeof(IRepository<>),typeof(Repository<>));
             builder.Services.AddTransient<Repository<PreferredPaymentMethod>>();
@@ -86,8 +87,8 @@ namespace VisionStore
             builder.Services.AddTransient<Repository<Purchase>>();
             builder.Services.AddTransient<Repository<PurchaseProducts>>();
             builder.Services.AddTransient<Repository<Cart>>();
+            builder.Services.AddTransient<Repository<PurchasedProducts>>();
             builder.Services.AddTransient<EmailSenderRepository>();
-            builder.Services.AddTransient<FileServiceRepository>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -115,11 +116,25 @@ namespace VisionStore
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.Use(async (Context, next) =>
+            {
+                await Console.Out.WriteLineAsync("this is before next");
+                await next(Context);
+                await Console.Out.WriteLineAsync("this is after next");
+
+            });
+            //app.UseMiddleware<>();
+
+
+            Console.WriteLine("akshay Shende");
+            app.Run(async(Context) =>
+            {
+                Console.WriteLine("this is in Run Method");
+            });
+
             app.Run();
         }
 
-        private class T
-        {
-        }
+        
     }
 }
